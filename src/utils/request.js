@@ -7,7 +7,21 @@ const request = axios.create({
   baseURL: ' http://api-toutiao-web.itheima.net/' //请求的基础路径
 })
 
-//请求拦截器
+// 添加请求拦截器
+request.interceptors.request.use(function (config) {
+  // 在发送请求之前做些什么
+  //config是当前请求的相关配置信息对象
+  //config是可以修改的
+  const user = JSON.parse(window.localStorage.getItem('user'))
+  if (user) {
+    config.headers.Authorization = `Bearer ${user.token}`
+  }
+  //return之后请求才会真正发出去
+  return config;
+}, function (error) {
+  // 对请求错误做些什么
+  return Promise.reject(error);
+});
 
 //响应拦截器
 

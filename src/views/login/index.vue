@@ -136,6 +136,13 @@
           })
           //关闭 loading
           this.loginLoading = false
+          //将接口返回的用户数据放到本地存储，方便应用数据共享
+          //本地存储只能存储字符串，需要转为JSON字符串进行存储
+          window.localStorage.setItem('user', JSON.stringify(res.data.data))
+          //跳转到首页
+          this.$router.push({
+            name: 'home'
+          })
         }).catch((err) => {
           console.log('登陆失败', err);
           this.$message.error('登陆失败，手机号或验证码错误')
