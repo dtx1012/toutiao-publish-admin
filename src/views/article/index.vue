@@ -7,7 +7,7 @@
         <!-- 面包屑导航 -->
         <el-breadcrumb separator-class="el-icon-arrow-right">
           <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-          <el-breadcrumb-item>活动管理</el-breadcrumb-item>
+          <el-breadcrumb-item>内容管理</el-breadcrumb-item>
         </el-breadcrumb>
       </div>
 
@@ -27,7 +27,7 @@
           </el-radio-group>
         </el-form-item>
         <el-form-item label="频道">
-          <el-select v-model="channelId" placeholder="请选择">
+          <el-select v-model="channelId" placeholder="请选择频道">
             <el-option label="全部" :value="null"></el-option>
             <el-option :label="channel.name" :value="channel.id" v-for="(channel,index) in channels" :key="index">
             </el-option>
@@ -85,7 +85,8 @@
         </el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
-            <el-button size="mini" type="primary" icon="el-icon-edit"></el-button>
+            <el-button size="mini" type="primary" icon="el-icon-edit"
+              @click="$router.push('/publish?id='+scope.row.id)"></el-button>
             <el-button size="mini" type="danger" icon="el-icon-delete" @click="onDeleteArticle(scope.row.id)">
             </el-button>
           </template>
@@ -179,8 +180,8 @@
     // 侦听器
     watch: {},
     created() {
-      this.loadArticles(1)
       this.loadChannels()
+      this.loadArticles(1)
     },
     mounted() {},
     // 组件方法
@@ -240,7 +241,10 @@
 
           });
         }).catch(() => {
-
+          this.$message({
+            type: 'info',
+            messzage: '已取消删除！'
+          })
         });
         //找到数据接口
         //封装请求方法
