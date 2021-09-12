@@ -8,7 +8,7 @@ import request from '@/utils/request'
  */
 export const uploadImage = data => {
   return request({
-    methods: 'POST',
+    method: 'POST',
     url: '/mp/v1_0/user/images',
     //一般文件上传的接口都需要把请求头中的Content-Type设置为multipart/form-data,但是我们使用axios上传文件的话不需要手动设置，你只要给data一个FormData对象即可。
     //new FormData()
