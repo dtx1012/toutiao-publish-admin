@@ -1,5 +1,5 @@
 <template>
-  <el-menu default-active="/" background-color="#002033" text-color="#fff" active-text-color="#ffd04b" router
+  <el-menu :default-active="$route.path" background-color="#002033" text-color="#fff" active-text-color="#ffd04b" router
     :collapse="isCollapse" class="nav-menu">
     <el-menu-item index="/">
       <i class="el-icon-s-home"></i>
