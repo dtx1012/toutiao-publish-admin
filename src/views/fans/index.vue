@@ -1,18 +1,40 @@
 <template>
   <div>
-    <!-- 1.为Echarts准备一个具备大小（宽高）的DOM -->
+    <el-tabs type="border-card">
+      <el-tab-pane label="粉丝列表">
+        <div class="demo-image">
+          <el-image style="width: 100px; height: 100px" :src="url"></el-image>
+        </div>
+      </el-tab-pane>
+      <el-tab-pane label="粉丝画像">粉丝画像
+        <div>
+          <!-- 1.为Echarts准备一个具备大小（宽高）的DOM -->
+          <div ref="main" style="width: 600px;height:400px;"></div>
+          <h2>地图图表示例</h2>
+          <Map-Demo></Map-Demo>
+          <h2>存粹的百度地图示例</h2>
+          <Bmap-Demo></Bmap-Demo>
+        </div>
+      </el-tab-pane>
+    </el-tabs>
+  </div>
+  <!-- <div>
+    1.为Echarts准备一个具备大小（宽高）的DOM
     <div ref="main" style="width: 600px;height:400px;"></div>
     <h2>地图图表示例</h2>
     <Map-Demo></Map-Demo>
     <h2>存粹的百度地图示例</h2>
     <Bmap-Demo></Bmap-Demo>
-  </div>
+  </div> -->
 </template>
 <script>
   //2.加载echarts
   import * as echarts from 'echarts'
   import MapDemo from './components/map-demo.vue';
   import BmapDemo from './components/bmap-demo.vue';
+  import {
+    getFans
+  } from '@/api/fans';
   export default {
     // 组件名称
     name: 'FansIndex',
@@ -25,13 +47,18 @@
     },
     // 组件状态值
     data() {
-      return {}
+      return {
+        fits: ['fill', 'contain', 'cover', 'none', 'scale-down'],
+        url: 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg'
+      }
     },
     // 计算属性
     computed: {},
     // 侦听器
     watch: {},
-    created() {},
+    created() {
+      this.loadingFans()
+    },
     mounted() {
       //注意：初始化 DOM 一定要写道 mounted 钩子函数中
 
@@ -63,7 +90,15 @@
       myChart.setOption(option);
     },
     // 组件方法
-    methods: {},
+    methods: {
+      loadingFans(){
+        getFans().then((res) => {
+          console.log(res);
+        }).catch((err) => {
+          
+        });
+      }
+    },
   }
 
 </script>
